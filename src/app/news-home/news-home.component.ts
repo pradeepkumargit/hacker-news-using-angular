@@ -16,25 +16,30 @@ export class NewsHomeComponent implements OnInit {
 
   rows = 10;
 
-  isNewsLoaded:boolean = false;
+  isNewsLoaded:any;
   constructor(private router: Router,
               private hackerNewsService:HackerNewsService) { 
-                this.getNews();    
+                    
               }
 
   ngOnInit() {
-    this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
-    console.log('after refresh how many news', this.news.length);
-    
+    this.getNews();
   }
 
   getNews() {
-    this.hackerNewsService.getNewsData().subscribe(
-      response => {
-        this.news = response['hits'];
-        console.log(this.news)
-      }
-    )
+    this.isNewsLoaded = localStorage.getItem('isNewsLoaded') ;
+    console.log('Is news already loaded using services',this.isNewsLoaded);
+    if(this.isNewsLoaded) {
+      this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
+      console.log('after refresh how many news', this.news.length);
+    } else {
+        this.hackerNewsService.getNewsData().subscribe(
+          response => {
+            this.news = response['hits'];
+            console.log(this.news)
+          }
+        )
+    }
   }
 
   navigateToNewDetail(news) {
@@ -55,9 +60,9 @@ export class NewsHomeComponent implements OnInit {
   hideNewsItem(news) {
     let newsTobeHidden = news;
     this.news = this.news.filter(item => item !== newsTobeHidden);
-
-    localStorage.setItem('items', JSON.stringify(this.news));
     this.isNewsLoaded = true;
+    localStorage.setItem('items', JSON.stringify(this.news));
+    localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
     console.log('news after click on Hide',this.news);
     console.log('new Length after click on hide',this.news.length);
   }
