@@ -2,6 +2,9 @@
     border:0px solid red;
     margin: 10px;
 }
+.title {
+    cursor: pointer;
+}
 .url {
     color:#92949c;
     margin: 0 5px;
@@ -19,6 +22,7 @@
 .hide {
     color:#4e1811;
     margin: 0 5px;
+    cursor: pointer;
 }
 @media only all {
     th.ui-p-6,

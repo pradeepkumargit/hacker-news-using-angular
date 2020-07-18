@@ -6,12 +6,28 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HackerNewsService {
 
-  newsURL = 'https://hn.algolia.com/api/v1/search?tags=front_page'
+  newsId:number;
+  newsFrontPageAPI = 'https://hn.algolia.com/api/v1/search?tags=front_page'
+  newsDetailPageAPI = 'https://hn.algolia.com/api/v1/items?id='
 
   constructor(private httpClient:HttpClient,) { }
 
   getNewsData() {
-    return this.httpClient.get(this.newsURL)
+    return this.httpClient.get(this.newsFrontPageAPI);
+  }
+
+  getNewsDetailData() {
+    let fullUrl = this.newsDetailPageAPI + this.newsId
+    console.log('full url',fullUrl);
+    return this.httpClient.get(fullUrl);
+  }
+
+  setNewsId(id) {
+    this.newsId = id;
+  }
+
+  getNewsId() {
+    return this.newsId;
   }
 
 }

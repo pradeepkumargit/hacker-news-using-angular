@@ -1,5 +1,5 @@
 <div class="app-news-home">
-    <p-table [value]="news" [paginator]="true" [rows]="rows">
+    <p-table [value]="news" [paginator]="true" [responsive]="true" [rows]="rows">
         <ng-template pTemplate="header">
             <tr>
                 <th>Comments</th>
@@ -14,12 +14,12 @@
                 <td>{{news.points}}</td>
                 <td>{{news.brand}}</td>
                 <td>
-                    <span class="title">{{news.title}}</span>
+                    <span class="title" (click)="navigateToNewDetail(news)">{{news.title}}</span>
                     <span class="url">({{news.url}})</span>
                     <span class="by">by</span>
                     <span class="author">{{news.author}}</span>
                     <span class="time">{{news.created_at | date: "H"}} hours Ago</span>
-                    <span id="hide" class="hide">[Hide]</span>
+                    <span id="hide" class="hide" (click)="hideNewsItem(news)">[Hide]</span>
                 </td>
             </tr>
         </ng-template>
