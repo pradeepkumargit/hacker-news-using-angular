@@ -1,0 +1,28 @@
+<div class="app-news-home">
+    <p-table [value]="news" [paginator]="true" [rows]="rows">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Comments</th>
+                <th>Vote Count</th>
+                <th>Up Count</th>
+                <th>New Details</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-news>
+            <tr>
+                <td>{{news.num_comments}}</td>
+                <td>{{news.points}}</td>
+                <td>{{news.brand}}</td>
+                <td>
+                    <span class="title">{{news.title}}</span>
+                    <span class="url">({{news.url}})</span>
+                    <span class="by">by</span>
+                    <span class="author">{{news.author}}</span>
+                    <span class="time">{{news.created_at | date: "H"}} hours Ago</span>
+                    <span id="hide" class="hide">[Hide]</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
