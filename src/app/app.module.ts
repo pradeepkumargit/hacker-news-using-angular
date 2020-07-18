@@ -12,6 +12,8 @@ import { HackerNewsService } from './service/hacker-news.service';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { TableModule } from 'primeng/table';
     RouterModule.forRoot([]),
     FormsModule,
     HttpClientModule,
-    TableModule
+    TableModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [HackerNewsService],
   bootstrap: [AppComponent]

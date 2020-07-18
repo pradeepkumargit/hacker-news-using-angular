@@ -16,11 +16,16 @@ export class NewsHomeComponent implements OnInit {
 
   rows = 10;
 
+  isNewsLoaded:boolean = false;
   constructor(private router: Router,
-              private hackerNewsService:HackerNewsService) { }
+              private hackerNewsService:HackerNewsService) { 
+                this.getNews();    
+              }
 
   ngOnInit() {
-    this.getNews();
+    this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
+    console.log('after refresh how many news', this.news.length);
+    
   }
 
   getNews() {
@@ -48,8 +53,11 @@ export class NewsHomeComponent implements OnInit {
   }
 
   hideNewsItem(news) {
-    let newTobeHidden = news;
-    this.news = this.news.filter(item => item !== newTobeHidden);
+    let newsTobeHidden = news;
+    this.news = this.news.filter(item => item !== newsTobeHidden);
+
+    localStorage.setItem('items', JSON.stringify(this.news));
+    this.isNewsLoaded = true;
     console.log('news after click on Hide',this.news);
     console.log('new Length after click on hide',this.news.length);
   }
