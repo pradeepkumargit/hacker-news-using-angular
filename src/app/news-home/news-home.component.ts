@@ -28,10 +28,10 @@ export class NewsHomeComponent implements OnInit {
 
   loadNews() {
     this.isNewsLoaded = localStorage.getItem('isNewsLoaded') ;
-    console.log('Is news already loaded using services',this.isNewsLoaded);
+    //console.log('Is news already loaded using services',this.isNewsLoaded);
     if(this.isNewsLoaded) {
       this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
-      console.log('after refresh how many news', this.news.length);
+      //console.log('after refresh how many news', this.news.length);
     } else {
         this.hackerNewsService.getNewsData().subscribe(
           response => {
@@ -45,16 +45,6 @@ export class NewsHomeComponent implements OnInit {
   navigateToNewsDetail(news) {
     console.log('what is the id',news.objectID);
     this.hackerNewsService.setNewsId(news.objectID);
-    // this.hackerNewsService.getNewsDetailData().subscribe(
-    //   reponse => {
-    //     if (reponse) {
-    //       console.log('news deatils',reponse);
-    //     }        
-    //   },
-    //   err => {
-    //     console.log('Something went wrong',err);
-    //   }
-    // )
   }
 
   hideNewsItem(news) {
@@ -63,17 +53,17 @@ export class NewsHomeComponent implements OnInit {
     this.isNewsLoaded = true;
     localStorage.setItem('items', JSON.stringify(this.news));
     localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
-    console.log('news after click on Hide',this.news);
-    console.log('new Length after click on hide',this.news.length);
+    // console.log('news after click on Hide',this.news);
+    // console.log('new Length after click on hide',this.news.length);
   }
 
   addUpVote(news) {
     console.log('what is the news',news)
     let updatedPoint =  news.points + 1;
     let currentNews = this.news.filter(item => item.objectID == news.objectID);
-    console.log(currentNews);
+    //console.log(currentNews);
     currentNews[0].points = updatedPoint;
-    console.log('final point',currentNews[0].points);
+    //console.log('final point',currentNews[0].points);
     localStorage.setItem('items', JSON.stringify(this.news));
     localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
   }
