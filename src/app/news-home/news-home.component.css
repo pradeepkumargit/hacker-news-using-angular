@@ -24,3 +24,11 @@
     margin: 0 5px;
     cursor: pointer;
 }
+.news-line-chart {
+    border-top:3px solid #ff6604;
+    border-bottom:3px solid #ff6604;
+    height: 400px;
+}
+.add-up-vote {
+    cursor: pointer;
+}

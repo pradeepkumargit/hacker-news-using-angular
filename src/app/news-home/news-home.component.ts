@@ -23,10 +23,10 @@ export class NewsHomeComponent implements OnInit {
               }
 
   ngOnInit() {
-    this.getNews();
+    this.loadNews();
   }
 
-  getNews() {
+  loadNews() {
     this.isNewsLoaded = localStorage.getItem('isNewsLoaded') ;
     console.log('Is news already loaded using services',this.isNewsLoaded);
     if(this.isNewsLoaded) {
@@ -42,19 +42,19 @@ export class NewsHomeComponent implements OnInit {
     }
   }
 
-  navigateToNewDetail(news) {
+  navigateToNewsDetail(news) {
     console.log('what is the id',news.objectID);
     this.hackerNewsService.setNewsId(news.objectID);
-    this.hackerNewsService.getNewsDetailData().subscribe(
-      reponse => {
-        if (reponse) {
-          console.log('news deatils',reponse);
-        }        
-      },
-      err => {
-        console.log('Something went wrong',err);
-      }
-    )
+    // this.hackerNewsService.getNewsDetailData().subscribe(
+    //   reponse => {
+    //     if (reponse) {
+    //       console.log('news deatils',reponse);
+    //     }        
+    //   },
+    //   err => {
+    //     console.log('Something went wrong',err);
+    //   }
+    // )
   }
 
   hideNewsItem(news) {
@@ -67,4 +67,14 @@ export class NewsHomeComponent implements OnInit {
     console.log('new Length after click on hide',this.news.length);
   }
 
+  addUpVote(news) {
+    console.log('what is the news',news)
+    let updatedPoint =  news.points + 1;
+    let currentNews = this.news.filter(item => item.objectID == news.objectID);
+    console.log(currentNews);
+    currentNews[0].points = updatedPoint;
+    console.log('final point',currentNews[0].points);
+    localStorage.setItem('items', JSON.stringify(this.news));
+    localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
+  }
 }
