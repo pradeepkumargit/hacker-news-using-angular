@@ -1,4 +1,9 @@
-# HackerNewsUsingAngular
+# Hacker News Using Angular
+
+# Tech Stack Details used to build this hackers news application
+1. Angular - 8.2.9
+2. For hackers news table  - PrimeNg - 8.0.0
+3. Application state management - localStorage web API
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
 
