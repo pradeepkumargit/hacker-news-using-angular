@@ -25,11 +25,13 @@ export class TimeLineChartComponent implements OnInit {
   constructor(private hackerNewsService:HackerNewsService) { }
 
   ngOnInit() {
-    this.newsList = this.hackerNewsService.getNewsList();
     this.loadAndRenderLineChart();
   }
 
   loadAndRenderLineChart() {
+    
+    this.newsList = this.hackerNewsService.getNewsList();
+    console.log(this.newsList)
     console.log('new for charts',this.newsList)
     
     const mapA = Array.prototype.map;
