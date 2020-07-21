@@ -17,6 +17,7 @@ export class NewsHomeComponent implements OnInit {
   rows = 10;
 
   isNewsLoaded:any;
+  showNewsForChart:boolean = false;
   constructor(private router: Router,
               private hackerNewsService:HackerNewsService) { 
                     
@@ -31,14 +32,20 @@ export class NewsHomeComponent implements OnInit {
     //console.log('Is news already loaded using services',this.isNewsLoaded);
     if(this.isNewsLoaded) {
       this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
-      this.hackerNewsService.setNewsList(this.news);
+      if (this.news && this.news.length > 0) {
+        this.hackerNewsService.setNewsList(this.news);
+        this.showNewsForChart = true;
+      }
       //console.log('after refresh how many news', this.news.length);
 
     } else {
         this.hackerNewsService.getNewsData().subscribe(
           response => {
             this.news = response['hits'];
-            this.hackerNewsService.setNewsList(this.news);
+            if (this.news && this.news.length > 0) {
+              this.hackerNewsService.setNewsList(this.news);
+              this.showNewsForChart = true;
+            }
             console.log(this.news)
           }
         )
