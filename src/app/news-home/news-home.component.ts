@@ -31,11 +31,14 @@ export class NewsHomeComponent implements OnInit {
     //console.log('Is news already loaded using services',this.isNewsLoaded);
     if(this.isNewsLoaded) {
       this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
+      this.hackerNewsService.setNewsList(this.news);
       //console.log('after refresh how many news', this.news.length);
+
     } else {
         this.hackerNewsService.getNewsData().subscribe(
           response => {
             this.news = response['hits'];
+            this.hackerNewsService.setNewsList(this.news);
             console.log(this.news)
           }
         )

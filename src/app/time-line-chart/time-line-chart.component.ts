@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { HackerNewsService } from '../service/hacker-news.service';
 
 @Component({
   selector: 'app-time-line-chart',
@@ -10,8 +11,7 @@ import { Color, Label } from 'ng2-charts';
 })
 export class TimeLineChartComponent implements OnInit {
 
-  @Input() newsList: any[] = [];
-
+  newsList: any[] = [];
   // for Votes
   newsPoints: any[];
   newsVotes: any;
@@ -22,9 +22,14 @@ export class TimeLineChartComponent implements OnInit {
   newIds: any[];
   ids: any;
 
-  constructor() { }
+  constructor(private hackerNewsService:HackerNewsService) { }
 
   ngOnInit() {
+    this.newsList = this.hackerNewsService.getNewsList();
+    this.loadAndRenderLineChart();
+  }
+
+  loadAndRenderLineChart() {
     console.log('new for charts',this.newsList)
     
     const mapA = Array.prototype.map;

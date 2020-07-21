@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class HackerNewsService {
 
   newsId:number;
+  newsList:any[];
   newsFrontPageAPI = 'https://hn.algolia.com/api/v1/search?tags=front_page'
   newsDetailPageAPI = 'https://hn.algolia.com/api/v1/items?id='
 
@@ -30,4 +31,11 @@ export class HackerNewsService {
     return this.newsId;
   }
 
+  setNewsList(newsList) {
+    this.newsList = newsList;
+  }
+
+  getNewsList() {
+    return this.newsList
+  }
 }
