@@ -27,7 +27,7 @@
 .news-line-chart {
     border-top:3px solid #ff6604;
     border-bottom:3px solid #ff6604;
-    height: 400px;
+    max-height: 350px;
 }
 .add-up-vote {
     cursor: pointer;

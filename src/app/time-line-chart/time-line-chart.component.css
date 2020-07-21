@@ -1,0 +1,7 @@
+.chart-wrapper {
+    display: block;
+}
+.chartjs-container {
+    background: #f4f4f4;
+    padding-top: 15px;
+}
