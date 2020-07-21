@@ -30,14 +30,14 @@ export class TimeLineChartComponent implements OnInit {
 
   loadAndRenderLineChart() {
     //console.log('new for charts',this.news)
-    const map = Array.prototype.map;
-    
+    const mapA = Array.prototype.map;
+
     this.newIds = this.news.map(id => id.objectID);
     //console.log('newsIDs',this.newIds);
 
     // for Votes start
     this.newsPoints = this.news.map(vote => vote.points)
-    this.newsVotes = map.call(this.newsPoints, eachVote => {
+    this.newsVotes = mapA.call(this.newsPoints, eachVote => {
       return eachVote;
     })
     console.log('newsVotes', this.newsVotes);
@@ -53,7 +53,7 @@ export class TimeLineChartComponent implements OnInit {
     // for Votes ends
 
     //Labels shown on the x-axis
-    this.ids = map.call(this.newIds, eachNewsId => {
+    this.ids = mapA.call(this.newIds, eachNewsId => {
       return `${eachNewsId}`;
     })
 
