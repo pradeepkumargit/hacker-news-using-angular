@@ -47,19 +47,19 @@ export class TimeLineChartComponent implements OnInit {
         label: 'Vote'
       },
     ];
-    console.log('lineChartData', this.lineChartData)
+    console.log('lineChartData Y-Axis', this.lineChartData)
     // for Votes ends
 
     this.newIds = newslist.map(id => id.objectID);
     console.log('newsIDs',this.newIds);
-    
+
     //Labels shown on the x-axis
     this.ids = mapA.call(this.newIds, eachNewsId => {
       return `${eachNewsId}`;
     })
 
     this.lineChartLabels = this.ids;
-    console.log('lineChartLabels', this.lineChartLabels)
+    console.log('lineChartLabels X-Axis', this.lineChartLabels)
   }
 
   // Define chart options
