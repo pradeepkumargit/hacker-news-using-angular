@@ -10,7 +10,7 @@ import { Color, Label } from 'ng2-charts';
 })
 export class TimeLineChartComponent implements OnInit {
 
-  @Input() news: any[] = [];
+  @Input() newsList: any[] = [];
 
   // for Votes
   newsPoints: any[];
@@ -25,16 +25,12 @@ export class TimeLineChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.loadAndRenderLineChart();
-  }
-
-  loadAndRenderLineChart() {
-    console.log('new for charts',this.news)
-    let newslist =  this.news;
+    console.log('new for charts',this.newsList)
+    
     const mapA = Array.prototype.map;
 
     // for Votes start
-    this.newsPoints = newslist.map(vote => vote.points)
+    this.newsPoints = this.newsList.map(vote => vote.points)
     this.newsVotes = mapA.call(this.newsPoints, eachVote => {
       return eachVote;
     })
@@ -50,7 +46,7 @@ export class TimeLineChartComponent implements OnInit {
     console.log('lineChartData Y-Axis', this.lineChartData)
     // for Votes ends
 
-    this.newIds = newslist.map(id => id.objectID);
+    this.newIds = this.newsList.map(id => id.objectID);
     console.log('newsIDs',this.newIds);
 
     //Labels shown on the x-axis
