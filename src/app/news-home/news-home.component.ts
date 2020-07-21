@@ -74,6 +74,10 @@ export class NewsHomeComponent implements OnInit {
     //console.log(currentNews);
     currentNews[0].points = updatedPoint;
     //console.log('final point',currentNews[0].points);
+    this.hackerNewsService.updateUpVoteCountInChart(this.news);
+    if (this.news && this.news.length > 0) {
+      this.hackerNewsService.setNewsList(this.news);
+    }
     localStorage.setItem('items', JSON.stringify(this.news));
     localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
   }
