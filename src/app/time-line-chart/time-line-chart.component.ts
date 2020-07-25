@@ -26,17 +26,19 @@ export class TimeLineChartComponent implements OnInit {
 
   ngOnInit() {
     this.loadAndRenderLineChart();
+    console.log('before upvote click',this.newsList);
     this.hackerNewsService.newsUpVoteCount$.subscribe(newsList => {
       this.newsList = newsList;
+      this.loadAndRenderLineChart();
       console.log('latest value after upvote',this.newsList);
     });    
   }
 
   loadAndRenderLineChart() {
-
     this.newsList = this.hackerNewsService.getNewsList();
     console.log(this.newsList)
-    console.log('new for charts',this.newsList)
+    console.log('new for charts',this.newsList);
+    console.log('new for charts after upvote click',this.newsList)
     
     const mapA = Array.prototype.map;
 
