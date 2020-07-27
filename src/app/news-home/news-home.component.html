@@ -1,6 +1,7 @@
 <div class="app-news-home">
     <div class="news-table">
-        <p-table [value]="news" [paginator]="true" [responsive]="true" [rows]="rows">
+        <p-table [value]="news" [paginator]="true" [responsive]="true" 
+        [rows]="rows" (onPage)="paginate($event)">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Comments</th>
@@ -34,5 +35,4 @@
     <div class="news-line-chart" *ngIf="showNewsForChart">
         <app-time-line-chart></app-time-line-chart>
     </div>
-
 </div>

@@ -13,6 +13,7 @@ export class HackerNewsService {
   newsFrontPageAPI = 'https://hn.algolia.com/api/v1/search?tags=front_page';
   newsDetailPageAPI = 'https://hn.algolia.com/api/v1/items?id=';
 
+  // Use Subject to change the line chart on real time based on the upvote count
   public newsUpVoteCount = new Subject<any>();
   newsUpVoteCount$ = this.newsUpVoteCount.asObservable();
 

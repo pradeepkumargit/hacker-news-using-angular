@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription'
 import { HackerNewsService } from '../service/hacker-news.service';
 import { News } from './news';
 
@@ -8,77 +9,96 @@ import { News } from './news';
   templateUrl: './news-home.component.html',
   styleUrls: ['./news-home.component.css']
 })
-export class NewsHomeComponent implements OnInit {
+export class NewsHomeComponent implements OnInit, OnDestroy {
+
+  subscription:Subscription;
 
   news: News[];
-
+  // pagination variable
   first = 0;
-
   rows = 10;
 
   isNewsLoaded:any;
   showNewsForChart:boolean = false;
-  constructor(private router: Router,
-              private hackerNewsService:HackerNewsService) { 
-                    
-              }
 
+  constructor(private router: Router,
+              private hackerNewsService:HackerNewsService) { }
+  
   ngOnInit() {
     this.loadNews();
   }
 
+  /**
+   * Method to get the news list 
+   */
   loadNews() {
-    this.isNewsLoaded = localStorage.getItem('isNewsLoaded') ;
-    //console.log('Is news already loaded using services',this.isNewsLoaded);
-    if(this.isNewsLoaded) {
-      this.news =  localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
+    // get the news from API only first timem otherwise get from localstorage for state management
+    this.isNewsLoaded = localStorage.getItem('isNewsLoaded');
+    if (this.isNewsLoaded) {
+      this.news = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
       if (this.news && this.news.length > 0) {
         this.hackerNewsService.setNewsList(this.news);
         this.showNewsForChart = true;
       }
-      //console.log('after refresh how many news', this.news.length);
-
     } else {
-        this.hackerNewsService.getNewsData().subscribe(
-          response => {
-            this.news = response['hits'];
-            if (this.news && this.news.length > 0) {
-              this.hackerNewsService.setNewsList(this.news);
-              this.showNewsForChart = true;
-            }
-            console.log(this.news)
+      this.subscription = this.hackerNewsService.getNewsData().subscribe(
+        response => {
+          this.news = response['hits'];
+          if (this.news && this.news.length > 0) {
+            this.hackerNewsService.setNewsList(this.news);
+            this.showNewsForChart = true;
           }
-        )
+          console.log(this.news)
+        }
+      )
     }
   }
 
-  navigateToNewsDetail(news) {
-    console.log('what is the id',news.objectID);
-    this.hackerNewsService.setNewsId(news.objectID);
-  }
-
+ /**
+  * Method to hide news item once click on hide 
+  * @param news 
+  */
   hideNewsItem(news) {
     let newsTobeHidden = news;
     this.news = this.news.filter(item => item !== newsTobeHidden);
     this.isNewsLoaded = true;
     localStorage.setItem('items', JSON.stringify(this.news));
     localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
-    // console.log('news after click on Hide',this.news);
-    // console.log('new Length after click on hide',this.news.length);
   }
 
-  addUpVote(news) {
-    console.log('what is the news',news)
+  /**
+   * Method to increase the upvote count on click on upvote icon
+   * @param news 
+   */
+  addUpVote(news) {    
+    // logic to updat the upvote count
     let updatedPoint =  news.points + 1;
-    let currentNews = this.news.filter(item => item.objectID == news.objectID);
-    //console.log(currentNews);
+    let currentNews = this.news.filter(item => item.objectID == news.objectID);    
     currentNews[0].points = updatedPoint;
-    //console.log('final point',currentNews[0].points);
+    
+    // logic to update the line chart on real time based on the upvote count
     this.hackerNewsService.updateUpVoteCountInChart(this.news);
     if (this.news && this.news.length > 0) {
       this.hackerNewsService.setNewsList(this.news);
     }
+
+    // logic to set the news state for state management in application
     localStorage.setItem('items', JSON.stringify(this.news));
     localStorage.setItem('isNewsLoaded', JSON.stringify(this.isNewsLoaded));    
+  }
+
+  /**
+   * Pagination method for table
+   * @param event 
+   */
+  paginate(event) {
+    console.log('first page',event.first);
+    console.log('row page',event.rows);
+  }
+
+  ngOnDestroy() {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

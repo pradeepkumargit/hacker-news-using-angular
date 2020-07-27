@@ -12,6 +12,7 @@ import { HackerNewsService } from '../service/hacker-news.service';
 export class TimeLineChartComponent implements OnInit {
 
   newsList: any[] = [];
+  
   // for Votes
   newsPoints: any[];
   newsVotes: any;
@@ -26,20 +27,18 @@ export class TimeLineChartComponent implements OnInit {
 
   ngOnInit() {
     this.loadAndRenderLineChart();
-    console.log('before upvote click',this.newsList);
     this.hackerNewsService.newsUpVoteCount$.subscribe(newsList => {
       this.newsList = newsList;
       this.loadAndRenderLineChart();
-      console.log('latest value after upvote',this.newsList);
     });    
   }
 
   loadAndRenderLineChart() {
+
+    // get the news from hackers news service
     this.newsList = this.hackerNewsService.getNewsList();
-    console.log(this.newsList)
-    console.log('new for charts',this.newsList);
-    console.log('new for charts after upvote click',this.newsList)
-    
+   
+    // to create the prototype of map
     const mapA = Array.prototype.map;
 
     // for Votes start
@@ -47,8 +46,7 @@ export class TimeLineChartComponent implements OnInit {
     this.newsVotes = mapA.call(this.newsPoints, eachVote => {
       return eachVote;
     })
-    console.log('newsVotes', this.newsVotes);
-
+    
     // Array of different segments in chart
     this.lineChartData = [
       {
@@ -56,11 +54,10 @@ export class TimeLineChartComponent implements OnInit {
         label: 'Vote'
       },
     ];
-    console.log('lineChartData Y-Axis', this.lineChartData)
+    // console.log('lineChartData Y-Axis', this.lineChartData)
     // for Votes ends
 
     this.newIds = this.newsList.map(id => id.objectID);
-    console.log('newsIDs',this.newIds);
 
     //Labels shown on the x-axis
     this.ids = mapA.call(this.newIds, eachNewsId => {
@@ -68,7 +65,7 @@ export class TimeLineChartComponent implements OnInit {
     })
 
     this.lineChartLabels = this.ids;
-    console.log('lineChartLabels X-Axis', this.lineChartLabels)
+    //console.log('lineChartLabels X-Axis', this.lineChartLabels)
   }
 
   // Define chart options
